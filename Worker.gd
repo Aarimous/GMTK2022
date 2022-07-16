@@ -9,18 +9,12 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			if event.pressed == true:
 				Dragger.pickUpItem(self, to_local(event.global_position))
 				scale = Vector2.ONE
+				if card:
+					card.worker = null
 				print("Player Clicked")
 			else:
 				Dragger.dropItem(self)
 				
-
-
-func _on_Area2D_mouse_entered():
-	pass # Replace with function body.
-
-
-func _on_Area2D_mouse_exited():
-	pass # Replace with function body.
 
 
 func onDrop():

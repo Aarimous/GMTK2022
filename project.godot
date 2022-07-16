@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Card.gd"
 }, {
+"base": "Area2D",
+"class": "Dice",
+"language": "GDScript",
+"path": "res://Dice.gd"
+}, {
+"base": "Control",
+"class": "DiceSlot",
+"language": "GDScript",
+"path": "res://DiceSlot.gd"
+}, {
 "base": "Node2D",
 "class": "Worker",
 "language": "GDScript",
@@ -21,6 +31,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Card": "",
+"Dice": "",
+"DiceSlot": "",
 "Worker": ""
 }
 
@@ -46,11 +58,20 @@ window/stretch/aspect="keep"
 
 common/drop_mouse_on_gui_input_disabled=true
 
+[layer_names]
+
+2d_physics/layer_1="Worker"
+2d_physics/layer_2="Dice"
+2d_physics/layer_3="Card"
+
 [physics]
 
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+2d/snapping/use_gpu_pixel_snap=true
+quality/filters/anisotropic_filter_level=8
 environment/default_clear_color=Color( 0.772549, 0.8, 0.721569, 1 )
+quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"
