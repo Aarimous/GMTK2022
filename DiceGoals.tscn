@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Art/dieWhite1.png" type="Texture" id=1]
+[ext_resource path="res://DiceGoals.gd" type="Script" id=2]
+
+[node name="DiceGoals" type="VBoxContainer"]
+margin_right = 72.0
+margin_bottom = 520.0
+mouse_filter = 2
+script = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 72.0
+margin_bottom = 64.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+margin_left = 4.0
+margin_right = 68.0
+margin_bottom = 64.0
+mouse_filter = 2
+texture = ExtResource( 1 )

@@ -10,7 +10,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 77.5, 115 )
 
-[node name="Worker" type="Node2D"]
+[node name="Worker" type="Node2D" groups=["ClickPrio"]]
 script = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]

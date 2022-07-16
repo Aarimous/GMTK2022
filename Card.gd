@@ -1,33 +1,55 @@
 extends Node2D
 class_name Card
 
-export var timeToComplete = 1
+export var timeToComplete = 2
 var currentTimeAdded = 0
+onready var diceSlots = $DiceSlotCont/MarginContainer/DiceSlots
+onready var diceSlosCont = $DiceSlotCont
 
 var worker = null
 
 
 
-onready var dicePacked = load("res://Dice.tscn")
-
 func _ready():
 	$ProgressBar.value = 0
-	$ProgressBar.max_value = 100	
+	$ProgressBar.max_value = 100
+	if diceSlots.get_child_count() == 0:
+		diceSlosCont.visible = false
+		$DiceSlotCollisionShape.disabled = true
 
 	
-func _process(delta):
-	if worker != null:
+func _process(delta):	
+	$DiceSlotCollisionShape.shape.extents = $DiceSlotCont.rect_size/2
+	$DiceSlotCollisionShape.position = $DiceSlotCont.rect_position + $DiceSlotCont.rect_size/2
+	
+
+
+	if shouldProcess():
 		currentTimeAdded += delta
 		$ProgressBar.value = $ProgressBar.max_value * currentTimeAdded/timeToComplete
 		if currentTimeAdded >= timeToComplete:
 			print("We need to create a die")
-			var newDice = dicePacked.instance()
+			var newDice = load("res://Dice.tscn").instance()
 			Game.main.add_child(newDice)
 			newDice.global_position = global_position
 			newDice.startBeingADiceDamnIt()
 			$ProgressBar.value = 0
 			currentTimeAdded = 0
+			reduceDicePips()
 			
+func reduceDicePips():
+	for diceSlot in $DiceSlotCont/MarginContainer/DiceSlots.get_children():
+		diceSlot.currentDice.reducePips(1)
+
+
+func shouldProcess():
+	if worker == null:
+		return false
+	for diceSlot in $DiceSlotCont/MarginContainer/DiceSlots.get_children(): 
+		if diceSlot.isFree == true:
+			return false
+	return true
+				
 			
 func _on_Card_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
@@ -57,13 +79,15 @@ func addWorker(_worker):
 	worker.scale = Vector2(.66,.66)
 	worker.position = Vector2.ZERO
 	
+	
 func addDice(dice):
-	for diceSlot in $PanelContainer/MarginContainer/DiceSlots.get_children():
-		if ( diceSlot is DiceSlot and 
+	for diceSlot in $DiceSlotCont/MarginContainer/DiceSlots.get_children():
+		if ( diceSlot.is_in_group("DiceSlot") and 
 		diceSlot.isFree == true and 
 		(diceSlot.type == dice.type or 
 		diceSlot.type == Game.RESOURCE_TYPE.MISC) ):
 			diceSlot.addDice(dice)
-			break
+			return
+	dice.rollInRandomDire(250, 135, 195, global_position)
 			
 	

@@ -6,10 +6,6 @@
 [ext_resource path="res://Theme/font_18.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Theme/font_22.tres" type="DynamicFont" id=5]
 [ext_resource path="res://DiceSlot.tscn" type="PackedScene" id=6]
-[ext_resource path="res://font_12.tres" type="DynamicFont" id=7]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 104, 154 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 1, 1, 1 )
@@ -35,76 +31,61 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Card" type="Area2D"]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 104, 154 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 43, 4 )
+
+[node name="Card" type="Area2D" groups=["DiceDrop"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
 [node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color( 0.486275, 0.631373, 0.752941, 1 )
 margin_left = -88.0
 margin_top = -176.0
 margin_right = 88.0
 margin_bottom = -162.0
+theme = ExtResource( 2 )
+percent_visible = false
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="DiceSlotCont" type="PanelContainer" parent="."]
 self_modulate = Color( 0.486275, 0.631373, 0.752941, 1 )
 margin_left = -192.0
 margin_top = -144.0
 margin_right = -96.0
-margin_bottom = 24.0
+margin_bottom = -52.0
+mouse_filter = 2
 theme = ExtResource( 2 )
 custom_styles/panel = SubResource( 2 )
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="DiceSlotCont"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 91.0
-margin_bottom = 315.0
+margin_bottom = 87.0
+mouse_filter = 2
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
-[node name="DiceSlots" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="DiceSlots" type="VBoxContainer" parent="DiceSlotCont/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 81.0
-margin_bottom = 305.0
+margin_bottom = 77.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
 
-[node name="Resources" type="Label" parent="PanelContainer/MarginContainer/DiceSlots"]
-visible = false
-margin_right = 76.0
-margin_bottom = 15.0
-theme = ExtResource( 2 )
-custom_fonts/font = ExtResource( 7 )
-text = "Resources"
-
-[node name="DiceSlot" parent="PanelContainer/MarginContainer/DiceSlots" instance=ExtResource( 6 )]
+[node name="DiceSlot" parent="DiceSlotCont/MarginContainer/DiceSlots" instance=ExtResource( 6 )]
 margin_right = 76.0
 margin_bottom = 72.0
-
-[node name="DiceSlot2" parent="PanelContainer/MarginContainer/DiceSlots" instance=ExtResource( 6 )]
-margin_top = 76.0
-margin_right = 76.0
-margin_bottom = 148.0
-
-[node name="DiceSlot3" parent="PanelContainer/MarginContainer/DiceSlots" instance=ExtResource( 6 )]
-margin_top = 152.0
-margin_right = 76.0
-margin_bottom = 224.0
-type = 2
-
-[node name="DiceSlot4" parent="PanelContainer/MarginContainer/DiceSlots" instance=ExtResource( 6 )]
-margin_top = 228.0
-margin_right = 76.0
-margin_bottom = 300.0
-type = 2
+type = 3
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.486275, 0.631373, 0.752941, 1 )
@@ -150,6 +131,14 @@ custom_fonts/font = ExtResource( 4 )
 text = "Worker"
 align = 1
 valign = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 0 )
+shape = SubResource( 1 )
+
+[node name="DiceSlotCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2( -147, -140 )
+shape = SubResource( 4 )
 
 [node name="WorkerSlot" type="Node2D" parent="."]
 position = Vector2( 0, -16 )
