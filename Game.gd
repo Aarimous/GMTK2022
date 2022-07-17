@@ -3,6 +3,7 @@ extends Node
 
 var main
 var rng : RandomNumberGenerator
+var cardCreator : CardCreator
 
 
 enum RESOURCE_TYPE {FOOD, WATER, MATERIAL, MISC}
@@ -12,10 +13,21 @@ var WATER_COLOR : Color = Color('#7CA1C0')
 var MATERIAL_COLOR : Color = Color('#9A9A97')
 var MISC_COLOR : Color = Color('#7E9E99')
 
+var currentTier = 0
+
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	main = get_node("/root/Main")
+	cardCreator = CardCreator.new()
+	
+func _notification(what):
+	match what:
+		MainLoop.NOTIFICATION_WM_MOUSE_EXIT:
+			if Dragger.item != null:
+				Dragger.dropItem(Dragger.item)
+		MainLoop.NOTIFICATION_WM_MOUSE_ENTER:
+			print("Mouse has entered the game window")
 	
 	
 func getColorByResourceType(type):
@@ -41,3 +53,7 @@ func getTextByResourceType(type):
 		RESOURCE_TYPE.MISC:
 			return "?"
 	return "IDIOT"
+	
+func _input(event):
+	if event.is_action_pressed("quit"):
+		get_tree().quit()

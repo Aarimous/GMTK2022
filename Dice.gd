@@ -5,15 +5,15 @@ class_name Dice
 var dropObject = null
 var type
 var slot = null
-var pips = 0
+var pips = null
+var direction : Vector2
 
 export var isTest = false
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	if isTest:
-		startBeingADiceDamnIt()
+func _process(delta):
+	global_position.x = clamp(global_position.x, 32, 1920 - 32)
+	global_position.y = clamp(global_position.y, 32, 1080 -32)
 	
 	
 func reducePips(value):
@@ -43,7 +43,7 @@ func onDrop():
 
 func _on_Dice_area_entered(area):
 	if area.is_in_group("DiceDrop"):
-			dropObject = area
+		dropObject = area
 
 
 func _on_Dice_area_exited(area):
@@ -56,7 +56,7 @@ func _on_Dice_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			if event.pressed == true:
-				Dragger.pickUpItem(self, to_local(event.global_position))
+				Dragger.pickUpItem(self, to_local(event.global_position) )
 				if slot != null:
 					slot.currentDice = null
 					slot.isFree = true
@@ -70,14 +70,24 @@ func _on_Dice_input_event(viewport, event, shape_idx):
 				Dragger.dropItem(self)
 				
 				
-func startBeingADiceDamnIt():
-	var diceRoll = Game.rng.randi_range(1,6)
-	pips = diceRoll
-	setDiceFace(diceRoll)
+func startBeingADiceDamnIt(_type, _pips, isMax, _numOfRolls = 0):
+	if _pips != null:
+		pips = clamp(_pips, 0 , 6)
+	else:
+		if _numOfRolls > 0:
+			for i in range(_numOfRolls):
+				var roll = Game.rng.randi_range(1,6)
+				print("Dice Roll ", i , " : ", roll)
+				if pips == null or (isMax and roll > pips) or (isMax == false and roll < pips):
+					pips = roll
+					
+	setDiceFace(pips)
+	if _type == Game.RESOURCE_TYPE.MISC:
+		type = Game.rng.randi_range(0,Game.RESOURCE_TYPE.keys().size() -1)
+	else:
+		type = _type
 	
-	var typeRoll = Game.rng.randi_range(0,2)
-	type = typeRoll
-	setDiceColorByType(typeRoll)
+	setDiceColorByType(type)
 	
 	rollInRandomDire(200, -15, 45, global_position)
 
@@ -102,10 +112,13 @@ func setDiceColorByType(type):
 	modulate = Game.getColorByResourceType(type)
 	
 	
-func rollInRandomDire(dist, minAngle, maxAngle, startPos):
-	var direction = Vector2(1,0)
-	var rot = Game.rng.randi_range(minAngle,maxAngle)
-	direction = direction.rotated(deg2rad(rot))
+func rollInRandomDire(dist, minAngle, maxAngle, startPos, dir = null):
+	if dir == null:
+		direction = Vector2(1,0)
+		var rot = Game.rng.randi_range(minAngle,maxAngle)
+		direction = direction.rotated(deg2rad(rot))
+	else:
+		direction = dir
 	var distance = Game.rng.randi_range(dist, dist * 2)
 	var targetLocation = direction * distance
 	

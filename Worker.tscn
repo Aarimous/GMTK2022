@@ -1,22 +1,20 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Art/Char_1.png" type="Texture" id=1]
 [ext_resource path="res://Art/Card_Base.png" type="Texture" id=2]
 [ext_resource path="res://Worker.gd" type="Script" id=3]
 [ext_resource path="res://Theme/Theme.tres" type="Theme" id=4]
 [ext_resource path="res://Theme/font_18.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Theme/font_22.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Theme/font_20.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Theme/font_15.tres" type="DynamicFont" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 77.5, 115 )
 
-[node name="Worker" type="Node2D" groups=["ClickPrio"]]
+[node name="Worker" type="Area2D" groups=["ClickPrio", "DiceDrop"]]
 script = ExtResource( 3 )
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 1 )
 shape = SubResource( 1 )
 
@@ -41,11 +39,22 @@ text = "NAME"
 align = 1
 valign = 1
 
+[node name="Efficency" type="Label" parent="."]
+margin_left = -73.0
+margin_top = 96.0
+margin_right = 73.0
+margin_bottom = 111.0
+theme = ExtResource( 4 )
+custom_fonts/font = ExtResource( 7 )
+text = "NAME"
+align = 1
+valign = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = -72.0
-margin_top = 89.0
-margin_right = 71.0
-margin_bottom = 112.0
+margin_left = -73.0
+margin_top = 73.0
+margin_right = 70.0
+margin_bottom = 96.0
 alignment = 1
 
 [node name="Hunger" type="Label" parent="HBoxContainer"]
@@ -64,6 +73,6 @@ theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 5 )
 text = "0/5"
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
-[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
-[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="area_entered" from="." to="." method="_on_Worker_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_Worker_area_exited"]
+[connection signal="input_event" from="." to="." method="_on_Worker_input_event"]

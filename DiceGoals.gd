@@ -19,9 +19,11 @@ func _ready():
 		6:
 			$CenterContainer/TextureRect.texture = load("res://Art/dieWhite6.png")
 			
-	for i in range(numNeeded):
-		add_child(load("res://DiceSlot.tscn").instance().init(Game.RESOURCE_TYPE.MISC))
-		
+	createSlots(numNeeded)
+	
+func createSlots(num):
+	for i in range(num):
+		add_child(load("res://DiceSlot.tscn").instance().init(Game.RESOURCE_TYPE.MISC))	
 
 func anyOpenSlots():
 	for diceSlot in get_children():
@@ -34,5 +36,15 @@ func addDice(dice):
 		if diceSlot.is_in_group("DiceSlot") and diceSlot.isFree:
 			diceSlot.addDice(dice)
 			return
+			
+func setGoal(num):
+	numNeeded = num
+	for diceSlot in get_children():
+		if diceSlot.is_in_group("DiceSlot"):
+			if diceSlot.isFree == false:
+				diceSlot.currentDice.queue_free()
+			diceSlot.queue_free()	
+	createSlots(numNeeded)
+				
 			
 
