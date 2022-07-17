@@ -14,7 +14,7 @@ func _process(delta):
 
 
 func pickUpItem(_item, _clickedOffset):
-	if item == null or (item is Card and _item.is_in_group("ClickPrio")):
+	if item == null or (item.is_in_group("Card") and _item.is_in_group("ClickPrio")):
 		item = _item
 		clickedOffset = _clickedOffset
 	

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/wamp.mp3-f1fcb5ca8ed47b67ec6a7fb686b5dd90.mp3str"
+
+[deps]
+
+source_file="res://Audio/wamp.mp3"
+dest_files=[ "res://.import/wamp.mp3-f1fcb5ca8ed47b67ec6a7fb686b5dd90.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

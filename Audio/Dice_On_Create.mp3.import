@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Dice_On_Create.mp3-0d3364ead1866a68c0219aead37107f3.mp3str"
+
+[deps]
+
+source_file="res://Audio/Dice_On_Create.mp3"
+dest_files=[ "res://.import/Dice_On_Create.mp3-0d3364ead1866a68c0219aead37107f3.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

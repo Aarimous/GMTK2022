@@ -2,7 +2,7 @@ extends Node
 class_name CardCreator
 
 
-enum CARD_TYPES {GATHERING, HUNTING_SMALL_GAME, HUNTING_LARGE_GAME, RIVER_WATER, PRAY_RNG}
+
 
 var cardPacked = load("res://Card.tscn")
 

@@ -3,12 +3,26 @@ class_name Dice
 
 
 var dropObject = null
-var type
+export var type  = 0
+export var isTest = false
 var slot = null
 var pips = null
 var direction : Vector2
 
-export var isTest = false
+
+func _ready():
+	if isTest: 
+		startBeingADiceDamnIt(type, 3, false,0, 1,6)
+
+
+
+func show():
+	visible = true
+	$CollisionShape2D.disabled = false
+	
+func hide():
+	visible = false
+	$CollisionShape2D.disabled = true
 
 
 func _process(delta):
@@ -30,10 +44,12 @@ func reducePips(value):
 func onDrop():
 	var tween = get_tree().create_tween() as SceneTreeTween
 	tween.tween_property(self, "rotation", 0.0, .25).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-
+	$OnDropNoCard.play()
 	if dropObject != null:
+		print("Adding Dice to Area ", dropObject.name)
 		dropObject.addDice(self)
 	else:
+		
 		var gp = global_position
 		get_parent().remove_child(self)
 		Game.main.add_child(self)
@@ -42,12 +58,15 @@ func onDrop():
 
 
 func _on_Dice_area_entered(area):
-	if area.is_in_group("DiceDrop"):
+	if area is Worker and type == Game.RESOURCE_TYPE.FOOD:
 		dropObject = area
+	elif area.is_in_group("DiceDrop"):
+		dropObject = area
+	
 
 
 func _on_Dice_area_exited(area):
-	if area.is_in_group("DiceDrop") and area == dropObject:
+	if (area.is_in_group("DiceDrop") or area is Worker) and area == dropObject:
 		dropObject = null
 
 
@@ -56,6 +75,7 @@ func _on_Dice_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			if event.pressed == true:
+				$OnPickUp.play()
 				Dragger.pickUpItem(self, to_local(event.global_position) )
 				if slot != null:
 					slot.currentDice = null
@@ -70,13 +90,14 @@ func _on_Dice_input_event(viewport, event, shape_idx):
 				Dragger.dropItem(self)
 				
 				
-func startBeingADiceDamnIt(_type, _pips, isMax, _numOfRolls = 0):
+func startBeingADiceDamnIt(_type, _pips, isMax, _numOfRolls = 0, minRoll = 1, maxRoll = 6):
+	$OnCreate.play()
 	if _pips != null:
-		pips = clamp(_pips, 0 , 6)
+		pips = clamp(_pips, 1 , 6)
 	else:
 		if _numOfRolls > 0:
 			for i in range(_numOfRolls):
-				var roll = Game.rng.randi_range(1,6)
+				var roll = Game.rng.randi_range(minRoll,maxRoll)
 				print("Dice Roll ", i , " : ", roll)
 				if pips == null or (isMax and roll > pips) or (isMax == false and roll < pips):
 					pips = roll

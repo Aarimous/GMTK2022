@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Art/Card_Base.png" type="Texture" id=1]
 [ext_resource path="res://Theme/Theme.tres" type="Theme" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://Theme/font_18.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Theme/font_20.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Theme/font_12.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Audio/card_pickup.mp3" type="AudioStream" id=7]
+[ext_resource path="res://Audio/shooo.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Audio/wamp.mp3" type="AudioStream" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 104, 154 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 1, 1, 1 )
@@ -31,16 +37,18 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 104, 154 )
-
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 43, 4 )
 
-[node name="Card" type="Area2D" groups=["DiceDrop"]]
+[node name="Card" type="Area2D" groups=["Card", "DiceDrop", "HideOnLoad"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 3 )
+diceTypeToCreateArray = [ 0, 0 ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 0 )
+shape = SubResource( 1 )
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 margin_left = -88.0
@@ -101,6 +109,7 @@ theme = ExtResource( 2 )
 custom_fonts/font = ExtResource( 5 )
 text = "Title"
 align = 1
+autowrap = true
 
 [node name="BaseDuration" type="Label" parent="."]
 margin_left = -96.0
@@ -136,10 +145,6 @@ text = "Worker"
 align = 1
 valign = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1, 0 )
-shape = SubResource( 1 )
-
 [node name="DiceSlotCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( -147, -140 )
 shape = SubResource( 4 )
@@ -147,6 +152,16 @@ shape = SubResource( 4 )
 [node name="WorkerSlot" type="Node2D" parent="."]
 position = Vector2( 0, -16 )
 z_index = 1
+
+[node name="OnPickUp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="OnDrop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Wamp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+pitch_scale = 1.1
 
 [connection signal="input_event" from="." to="." method="_on_Card_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]

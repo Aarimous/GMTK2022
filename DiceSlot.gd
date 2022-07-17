@@ -18,6 +18,7 @@ func _ready():
 		
 
 func addDice(dice):
+	$OnDiceAdd.play()
 	dice.get_parent().remove_child(dice)
 	add_child(dice)
 	dice.position = Vector2.ZERO + Vector2(36,36)

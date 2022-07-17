@@ -14,26 +14,28 @@ func setGoals():
 		0:	
 			setValues(1,1,0,0,0,0)
 			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 0 Goal - Tutorial"
-			for card in Game.cardCreator.getTier0Card():
-				Game.main.call_deferred("add_child", card)
+#			for card in Game.cardCreator.getTier0Card():
+#				Game.main.call_deferred("add_child", card)
 		1:	
 			setValues(3,2,1,0,0,0)
-			for card in Game.cardCreator.getTier1Card():
-				Game.main.call_deferred("add_child", card)
+#			for card in Game.cardCreator.getTier1Card():
+#				Game.main.call_deferred("add_child", card)
+			Game.main.doTier1()
 			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 1 Goal"
 			
 		2:
-			setValues(4,2,4,1,0,0)
-			Game.main.call_defferred()
+			setValues(4,3,1,1,0,0)
+			Game.main.doTier2()
 			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 2 Goal"
 		3:
+			setValues(3,3,1,1,1,0)
 			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 3 Goal"
+			Game.main.doTier3()
 		4:
+			setValues(6,4,4,2,2,2)
 			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 4 Goal"
-		5:
-			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 5 Goal"
-		6:
-			$PanelContainer/MarginContainer/VBoxContainer/Goal.text = "Tier 6 Goal"
+			Game.main.doTier4()
+
 	
 func addDice(dice):
 	var throwUpDice = true
@@ -65,15 +67,19 @@ func addDice(dice):
 				throwUpDice = false
 	if throwUpDice:
 		dice.rollInRandomDire(250, 135, 170, dice.global_position)
+		$Wamp.play()
+	else:
+		$OnDiceAdded.play()
 		
 	for slot in $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer.get_children():
 		if slot.anyOpenSlots():
 			return
 	
 	Game.currentTier += 1
+	$OnTeirUp.play()
 	setGoals()
-	if Game.currentTier > 6:
-		print("GAME OVER YOU WIN")
+	if Game.currentTier > 4:
+		Game.emit_signal("GameOver")
 		
 	
 func setValues(d1, d2, d3, d4, d5, d6):

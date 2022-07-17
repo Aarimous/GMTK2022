@@ -3,7 +3,8 @@ extends Node
 
 var main
 var rng : RandomNumberGenerator
-var cardCreator : CardCreator
+
+signal GameOver
 
 
 enum RESOURCE_TYPE {FOOD, WATER, MATERIAL, MISC}
@@ -18,8 +19,7 @@ var currentTier = 0
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	main = get_node("/root/Main")
-	cardCreator = CardCreator.new()
+
 	
 func _notification(what):
 	match what:

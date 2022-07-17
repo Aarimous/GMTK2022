@@ -1,17 +1,21 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Art/Char_1.png" type="Texture" id=1]
+[ext_resource path="res://Art/Char_Thick_Boi.png" type="Texture" id=1]
 [ext_resource path="res://Art/Card_Base.png" type="Texture" id=2]
 [ext_resource path="res://Worker.gd" type="Script" id=3]
 [ext_resource path="res://Theme/Theme.tres" type="Theme" id=4]
 [ext_resource path="res://Theme/font_18.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Theme/font_20.tres" type="DynamicFont" id=6]
-[ext_resource path="res://Theme/font_15.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Audio/hugh.mp3" type="AudioStream" id=7]
+[ext_resource path="res://Audio/emmmHmm.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Audio/ergggmmm.mp3" type="AudioStream" id=9]
+[ext_resource path="res://Audio/working.mp3" type="AudioStream" id=10]
+[ext_resource path="res://Audio/eating.mp3" type="AudioStream" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 77.5, 115 )
 
-[node name="Worker" type="Area2D" groups=["ClickPrio", "DiceDrop"]]
+[node name="Worker" type="Area2D" groups=["ClickPrio", "HideOnLoad"]]
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -25,6 +29,7 @@ texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.4, 0.376471, 0.572549, 1 )
+position = Vector2( -1, -23 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 
@@ -41,37 +46,56 @@ valign = 1
 
 [node name="Efficency" type="Label" parent="."]
 margin_left = -73.0
-margin_top = 96.0
+margin_top = 86.0
 margin_right = 73.0
-margin_bottom = 111.0
+margin_bottom = 109.0
 theme = ExtResource( 4 )
-custom_fonts/font = ExtResource( 7 )
-text = "NAME"
+custom_fonts/font = ExtResource( 6 )
+text = "Speed x1"
 align = 1
 valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = -73.0
-margin_top = 73.0
+margin_top = 63.0
 margin_right = 70.0
-margin_bottom = 96.0
+margin_bottom = 86.0
 alignment = 1
 
 [node name="Hunger" type="Label" parent="HBoxContainer"]
-margin_left = 19.0
-margin_right = 88.0
-margin_bottom = 23.0
+margin_left = 16.0
+margin_right = 91.0
+margin_bottom = 25.0
 theme = ExtResource( 4 )
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 6 )
 text = "Hunger"
 
 [node name="HungerValues" type="Label" parent="HBoxContainer"]
-margin_left = 92.0
-margin_right = 124.0
-margin_bottom = 23.0
+margin_left = 95.0
+margin_top = 1.0
+margin_right = 127.0
+margin_bottom = 24.0
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 5 )
 text = "0/5"
+
+[node name="OnPickUp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Working" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+
+[node name="OnPlaceInCard" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="OnPlaceOnBoard" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Eating" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+pitch_scale = 1.2
+
+[node name="OnFull" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_Worker_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_Worker_area_exited"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/slot_noise.mp3-218d37b48abd83627d6b70f9086baaaf.mp3str"
+
+[deps]
+
+source_file="res://Audio/slot_noise.mp3"
+dest_files=[ "res://.import/slot_noise.mp3-218d37b48abd83627d6b70f9086baaaf.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

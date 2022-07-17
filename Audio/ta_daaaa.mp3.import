@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ta_daaaa.mp3-bc850d1de96a00b7a09039f80ed82942.mp3str"
+
+[deps]
+
+source_file="res://Audio/ta_daaaa.mp3"
+dest_files=[ "res://.import/ta_daaaa.mp3-bc850d1de96a00b7a09039f80ed82942.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

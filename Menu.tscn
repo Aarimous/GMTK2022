@@ -1,0 +1,125 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Theme/font_100.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Menu.gd" type="Script" id=2]
+[ext_resource path="res://Theme/Theme.tres" type="Theme" id=3]
+[ext_resource path="res://Theme/font_48.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Theme/TwitchGlitchPurple.png" type="Texture" id=5]
+[ext_resource path="res://Theme/5296521_play_video_vlog_youtube_youtube logo_icon (1).png" type="Texture" id=6]
+[ext_resource path="res://Theme/MUNN6w.png" type="Texture" id=7]
+[ext_resource path="res://Art/dieWhite6.png" type="Texture" id=8]
+[ext_resource path="res://Art/dieWhite3.png" type="Texture" id=9]
+[ext_resource path="res://Art/dieWhite4.png" type="Texture" id=10]
+[ext_resource path="res://Art/dieWhite5.png" type="Texture" id=11]
+[ext_resource path="res://Art/dieWhite1.png" type="Texture" id=12]
+[ext_resource path="res://Art/dieWhite2.png" type="Texture" id=13]
+
+[sub_resource type="AnimatedTexture" id=1]
+flags = 12
+frames = 6
+fps = 1.0
+frame_0/texture = ExtResource( 12 )
+frame_1/texture = ExtResource( 13 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 9 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 10 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 11 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 8 )
+frame_5/delay_sec = 0.0
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Tile" type="Label" parent="."]
+margin_left = 453.0
+margin_top = 246.0
+margin_right = 1527.0
+margin_bottom = 493.0
+custom_fonts/font = ExtResource( 1 )
+text = "All Work No Dice"
+align = 1
+valign = 1
+
+[node name="Tile2" type="Label" parent="."]
+margin_left = 111.0
+margin_top = 797.0
+margin_right = 1855.0
+margin_bottom = 1044.0
+custom_fonts/font = ExtResource( 4 )
+text = "Created By Aarimous live on Twitch
+Showout to Twitch chat, much love you kept me going :)
+"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -217.5
+margin_top = -48.0
+margin_right = 217.5
+margin_bottom = 48.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
+text = "Play"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -202.0
+margin_top = 92.0
+margin_right = 202.0
+margin_bottom = 292.0
+
+[node name="Twitch" type="TextureButton" parent="HBoxContainer"]
+margin_right = 200.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 200, 200 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 5 )
+expand = true
+stretch_mode = 4
+
+[node name="YouTube" type="TextureButton" parent="HBoxContainer"]
+margin_left = 204.0
+margin_right = 404.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 200, 200 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 6 )
+expand = true
+stretch_mode = 4
+
+[node name="Munn6w" type="Sprite" parent="."]
+position = Vector2( 1588, 180 )
+scale = Vector2( 0.33, 0.33 )
+texture = ExtResource( 7 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 995, -32 )
+z_index = -2
+amount = 100
+lifetime = 30.0
+preprocess = 30.0
+texture = SubResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 1000, 1 )
+angular_velocity = 180.0
+angular_velocity_random = 1.0
+scale_amount_random = 0.5
+
+[connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
+[connection signal="button_up" from="HBoxContainer/Twitch" to="." method="_on_Twitch_button_up"]
+[connection signal="button_up" from="HBoxContainer/YouTube" to="." method="_on_YouTube_button_up"]
